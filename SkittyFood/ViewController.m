@@ -27,6 +27,8 @@
     
     CanViewController *interactiveCanViewController;
     CanViewController *infoCanViewController;
+    
+    UISelectionFeedbackGenerator *feedbackGenerator;
 }
 
 - (void)viewDidLoad {
@@ -40,6 +42,8 @@
     interactiveCanViewController.delegate = self;
     interactiveCanViewController.canFoodColor = [UIColor colorWithRed:0 green:0.589 blue:1 alpha:1];
     
+    feedbackGenerator = [UISelectionFeedbackGenerator new];
+    
     defaults = [NSUserDefaults standardUserDefaults];
     NSInteger saved = [defaults integerForKey:amountOfFoodAtStartKey];
     if (saved == 0) {
@@ -50,6 +54,7 @@
 }
 
 - (void)setAmountOfFoodAtStart:(NSInteger)amountOfFoodAtStart {
+    [feedbackGenerator selectionChanged];
     NSLog(@"%li", amountOfFoodAtStart);
     [defaults setInteger:amountOfFoodAtStart forKey:amountOfFoodAtStartKey];
     [defaults synchronize];
@@ -84,14 +89,10 @@
 - (void)popView:(UIView *)view {
     [UIView animateWithDuration:0.1 animations:^{
         [view setTransform:CGAffineTransformMakeScale(0.9, 0.9)];
-    } completion:^(BOOL finished) {
-//        [UIView animateWithDuration:0.1 animations:^{
-//            [view setTransform:CGAffineTransformMakeScale(1.1, 1.1)];
-//        } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.1 animations:^{
-                [view setTransform:CGAffineTransformIdentity];
-            }];
-//        }];
+    } completion:^(BOOL finished) {\
+        [UIView animateWithDuration:0.1 animations:^{
+            [view setTransform:CGAffineTransformIdentity];
+        }];
     }];
 }
 
