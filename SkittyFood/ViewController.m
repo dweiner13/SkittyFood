@@ -13,7 +13,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property NSInteger amountOfFoodAtStart;
 @property (readonly) NSInteger eodFoodAmount;
+@property (weak, nonatomic) IBOutlet UIView *interactiveCanViewContainerView;
 @property (readonly) bool needsNewCan;
+@property (weak, nonatomic) IBOutlet UIView *infoCanViewContainerView;
 @property (readonly) NSString* infoLabelText;
 @end
 
@@ -23,8 +25,8 @@
     NSString *amountOfFoodAtStartKey;
     NSInteger amountOfFoodHeEatsPerDay;
     
-    CanViewController *interactiveCanView;
-    CanViewController *infoCanView;
+    CanViewController *interactiveCanViewController;
+    CanViewController *infoCanViewController;
 }
 
 - (void)viewDidLoad {
@@ -33,9 +35,10 @@
     amountOfFoodAtStartKey = @"amountOfFoodAtStartKey";
     amountOfFoodHeEatsPerDay = 3;
     
-    infoCanView = self.childViewControllers.lastObject;
-    interactiveCanView = self.childViewControllers.firstObject;
-    interactiveCanView.delegate = self;
+    infoCanViewController = self.childViewControllers.lastObject;
+    interactiveCanViewController = self.childViewControllers.firstObject;
+    interactiveCanViewController.delegate = self;
+    interactiveCanViewController.canFoodColor = [UIColor colorWithRed:0 green:0.589 blue:1 alpha:1];
     
     defaults = [NSUserDefaults standardUserDefaults];
     NSInteger saved = [defaults integerForKey:amountOfFoodAtStartKey];
@@ -43,7 +46,7 @@
         saved = 4;
     }
     NSLog(@"%li", (long)saved);
-    interactiveCanView.amountOfFood = saved;
+    interactiveCanViewController.amountOfFood = saved;
 }
 
 - (void)setAmountOfFoodAtStart:(NSInteger)amountOfFoodAtStart {
@@ -51,7 +54,8 @@
     [defaults setInteger:amountOfFoodAtStart forKey:amountOfFoodAtStartKey];
     [defaults synchronize];
     self.infoLabel.text = self.infoLabelText;
-    infoCanView.amountOfFood = self.eodFoodAmount;
+    infoCanViewController.amountOfFood = self.eodFoodAmount;
+    [self popView:self.interactiveCanViewContainerView];
 }
 
 - (NSInteger)amountOfFoodAtStart {
@@ -75,6 +79,16 @@
         result = 4 + result;
     }
     return result;
+}
+
+- (void)popView:(UIView *)view {
+    [UIView animateWithDuration:0.1 animations:^{
+        [view setTransform:CGAffineTransformMakeScale(1.1, 1.1)];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.1 animations:^{
+            [view setTransform:CGAffineTransformIdentity];
+        }];
+    }];
 }
 
 - (NSString *)infoLabelText {

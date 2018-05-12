@@ -32,6 +32,8 @@
 - (void)viewDidLoad	 {
     [super viewDidLoad];
     
+    self.canFoodColor = UIColor.lightGrayColor;
+    
     self.quarterViews = @[
         self.firstView,
         self.secondView,
@@ -42,8 +44,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     self.view.layer.cornerRadius = CGRectGetWidth(self.view.frame) / 2;
-    self.view.layer.borderWidth = 4;
-    self.view.layer.borderColor = [UIColor colorWithRed:0.529 green:0.364 blue:0.478 alpha:1].CGColor;
+    self.view.layer.borderWidth = 6;
+    self.view.layer.borderColor = UIColor.blackColor.CGColor;
     self.view.backgroundColor = UIColor.clearColor;
 }
 
@@ -56,7 +58,7 @@
         if (idx < hideBeforeIndex) {
             obj.backgroundColor = UIColor.clearColor;
         } else {
-            obj.backgroundColor = [UIColor colorWithRed:0.494 green:0.545 blue:0.721 alpha:1];
+            obj.backgroundColor = self.canFoodColor;
         }
     }];
 }

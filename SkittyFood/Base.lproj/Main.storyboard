@@ -69,7 +69,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="infoCanViewContainerView" destination="nW1-Yc-ccf" id="sPK-Mj-7To"/>
                         <outlet property="infoLabel" destination="FIA-ne-3WZ" id="xQT-MI-SfX"/>
+                        <outlet property="interactiveCanViewContainerView" destination="xfw-Fv-iHz" id="dIT-QJ-N9p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -175,6 +177,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="p08-5F-Ff0"/>
+        <segue reference="LO6-H6-un9"/>
     </inferredMetricsTieBreakers>
 </document>

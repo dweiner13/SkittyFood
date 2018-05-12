@@ -10,10 +10,13 @@
 
 
 @class CanViewController;
+
 @protocol CanViewControllerDelegate <NSObject>
 - (void) canViewController:(CanViewController *)canViewController didSetFood: (NSInteger) food;
 @end
+
 @interface CanViewController : UIViewController
 @property (nonatomic, weak) id <CanViewControllerDelegate> delegate;
 @property NSInteger amountOfFood;
+@property UIColor *canFoodColor;
 @end
