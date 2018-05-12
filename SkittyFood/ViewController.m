@@ -83,11 +83,15 @@
 
 - (void)popView:(UIView *)view {
     [UIView animateWithDuration:0.1 animations:^{
-        [view setTransform:CGAffineTransformMakeScale(1.1, 1.1)];
+        [view setTransform:CGAffineTransformMakeScale(0.9, 0.9)];
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.1 animations:^{
-            [view setTransform:CGAffineTransformIdentity];
-        }];
+//        [UIView animateWithDuration:0.1 animations:^{
+//            [view setTransform:CGAffineTransformMakeScale(1.1, 1.1)];
+//        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.1 animations:^{
+                [view setTransform:CGAffineTransformIdentity];
+            }];
+//        }];
     }];
 }
 
