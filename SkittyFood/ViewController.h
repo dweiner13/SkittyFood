@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CanViewController.h"
 
-@interface ViewController : UIViewController
-
+@interface ViewController : UIViewController <CanViewControllerDelegate>
 
 @end
 
