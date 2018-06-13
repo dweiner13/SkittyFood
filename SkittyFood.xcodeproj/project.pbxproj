@@ -17,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E00457B420D0B86E005AFB15 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; wrapsLines = 1; };
+		E00457B620D0B90A005AFB15 /* screen1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen1.png; sourceTree = "<group>"; };
 		E04E795420A747F900188659 /* SkittyFood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkittyFood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E04E795720A747F900188659 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E04E795820A747F900188659 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -53,9 +55,19 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
+		E00457B520D0B8C4005AFB15 /* screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				E00457B620D0B90A005AFB15 /* screen1.png */,
+			);
+			path = screenshots;
+			sourceTree = "<group>";
+		};
 		E04E794B20A747F900188659 = {
 			isa = PBXGroup;
 			children = (
+				E00457B520D0B8C4005AFB15 /* screenshots */,
+				E00457B420D0B86E005AFB15 /* README.md */,
 				E04E795620A747F900188659 /* SkittyFood */,
 				E04E795520A747F900188659 /* Products */,
 			);
