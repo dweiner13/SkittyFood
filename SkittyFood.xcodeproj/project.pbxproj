@@ -42,6 +42,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E004579120D0A2F4005AFB15 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E04E795A20A747F900188659 /* ViewController.h */,
+				E04E795B20A747F900188659 /* ViewController.m */,
+				E04E796D20A758F900188659 /* CanViewController.h */,
+				E04E796E20A758F900188659 /* CanViewController.m */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
 		E04E794B20A747F900188659 = {
 			isa = PBXGroup;
 			children = (
@@ -61,16 +72,13 @@
 		E04E795620A747F900188659 /* SkittyFood */ = {
 			isa = PBXGroup;
 			children = (
+				E004579120D0A2F4005AFB15 /* View Controllers */,
 				E04E795720A747F900188659 /* AppDelegate.h */,
 				E04E795820A747F900188659 /* AppDelegate.m */,
-				E04E795A20A747F900188659 /* ViewController.h */,
-				E04E795B20A747F900188659 /* ViewController.m */,
 				E04E795D20A747F900188659 /* Main.storyboard */,
 				E04E796220A747FA00188659 /* LaunchScreen.storyboard */,
 				E04E796520A747FA00188659 /* Info.plist */,
 				E04E796620A747FA00188659 /* main.m */,
-				E04E796D20A758F900188659 /* CanViewController.h */,
-				E04E796E20A758F900188659 /* CanViewController.m */,
 				E04E796020A747FA00188659 /* Assets.xcassets */,
 			);
 			path = SkittyFood;
@@ -86,6 +94,7 @@
 				E04E795020A747F900188659 /* Sources */,
 				E04E795120A747F900188659 /* Frameworks */,
 				E04E795220A747F900188659 /* Resources */,
+				E004579420D0A32C005AFB15 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -140,6 +149,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E004579420D0A32C005AFB15 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E04E795020A747F900188659 /* Sources */ = {

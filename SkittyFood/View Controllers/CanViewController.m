@@ -34,6 +34,8 @@
     
     self.canFoodColor = UIColor.lightGrayColor;
     
+    self.shouldBeEditable = YES;
+    
     self.quarterViews = @[
         self.firstView,
         self.secondView,
@@ -52,7 +54,6 @@
 - (void)setAmountOfFood:(NSInteger)amountOfFood {
     NSAssert(amountOfFood >= 1 || amountOfFood <= 4, @"amountOfFood must be between 1 and 4 inclusive");
     _amountOfFood = amountOfFood;
-    [self.delegate canViewController:self didSetFood:amountOfFood];
     NSInteger hideBeforeIndex = 4 - amountOfFood;
     [self.quarterViews enumerateObjectsUsingBlock:^(UIView* _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx < hideBeforeIndex) {
@@ -61,6 +62,7 @@
             obj.backgroundColor = self.canFoodColor;
         }
     }];
+    [self.delegate canViewController:self didSetFood:amountOfFood];
 }
 
 - (NSInteger)amountOfFood {
@@ -68,18 +70,30 @@
 }
 
 - (IBAction)tappedFirstQuarter:(id)sender {
+    if (!self.shouldBeEditable) {
+        return;
+    }
     self.amountOfFood = 4;
 }
 
 - (IBAction)tappedSecondQuarter:(id)sender {
+    if (!self.shouldBeEditable) {
+        return;
+    }
     self.amountOfFood = 3;
 }
 
 - (IBAction)tappedThirdQuarter:(id)sender {
+    if (!self.shouldBeEditable) {
+        return;
+    }
     self.amountOfFood = 2;
 }
 
 - (IBAction)tappedFourthQuater:(id)sender {
+    if (!self.shouldBeEditable) {
+        return;
+    }
     self.amountOfFood = 1;
 }
 @end

@@ -38,6 +38,7 @@
     amountOfFoodHeEatsPerDay = 3;
     
     infoCanViewController = self.childViewControllers.lastObject;
+    infoCanViewController.shouldBeEditable = NO;
     interactiveCanViewController = self.childViewControllers.firstObject;
     interactiveCanViewController.delegate = self;
     interactiveCanViewController.canFoodColor = [UIColor colorWithRed:0 green:0.589 blue:1 alpha:1];

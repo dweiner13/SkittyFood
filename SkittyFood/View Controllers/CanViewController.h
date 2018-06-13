@@ -19,4 +19,5 @@
 @property (nonatomic, weak) id <CanViewControllerDelegate> delegate;
 @property NSInteger amountOfFood;
 @property UIColor *canFoodColor;
+@property BOOL shouldBeEditable;
 @end
