@@ -56,12 +56,13 @@ NSString *kLastUpdatedKey = @"dateFoodAtStartLastUpdated";
     lastUpdatedFormatter.timeStyle = NSDateFormatterShortStyle;
     
     defaults = [NSUserDefaults standardUserDefaults];
-    NSInteger saved = [defaults integerForKey:kAmountOfFoodAtStartKey];
     NSDate *savedLastUpdated = (NSDate *)[defaults objectForKey:kLastUpdatedKey];
     [self updateLastUpdatedLabelWithDate:savedLastUpdated];
     if (savedLastUpdated) {
         lastUpdated = savedLastUpdated;
     }
+
+    NSInteger saved = [defaults integerForKey:kAmountOfFoodAtStartKey];
     if (saved == 0) {
         saved = 4;
     }
@@ -80,7 +81,7 @@ NSString *kLastUpdatedKey = @"dateFoodAtStartLastUpdated";
     [self updateLastUpdatedLabelWithDate:now];
     
     [defaults setObject:now forKey:kLastUpdatedKey];
-    [defaults setInteger:amountOfFoodAtStart forKey:kLastUpdatedKey];
+    [defaults setInteger:amountOfFoodAtStart forKey:kAmountOfFoodAtStartKey];
     [defaults synchronize];
     
     self.infoLabel.text = self.infoLabelText;
