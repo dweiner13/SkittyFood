@@ -16,25 +16,30 @@
 @property (weak, nonatomic) IBOutlet UIView *interactiveCanViewContainerView;
 @property (readonly) bool needsNewCan;
 @property (weak, nonatomic) IBOutlet UIView *infoCanViewContainerView;
+@property (weak, nonatomic) IBOutlet UILabel *lastUpdatedLabel;
 @property (readonly) NSString* infoLabelText;
 @end
 
+NSString *kAmountOfFoodAtStartKey = @"amountOfFoodAtStartKey";
+NSString *kLastUpdatedKey = @"dateFoodAtStartLastUpdated";
+
 @implementation ViewController {
     NSInteger _amountOfFoodAtStart;
+    NSDate *lastUpdated;
     NSUserDefaults *defaults;
-    NSString *amountOfFoodAtStartKey;
     NSInteger amountOfFoodHeEatsPerDay;
     
     CanViewController *interactiveCanViewController;
     CanViewController *infoCanViewController;
+    
+    NSDateFormatter *lastUpdatedFormatter;
     
     UISelectionFeedbackGenerator *feedbackGenerator;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    amountOfFoodAtStartKey = @"amountOfFoodAtStartKey";
+
     amountOfFoodHeEatsPerDay = 3;
     
     infoCanViewController = self.childViewControllers.lastObject;
@@ -45,27 +50,47 @@
     
     feedbackGenerator = [UISelectionFeedbackGenerator new];
     
+    lastUpdatedFormatter = [NSDateFormatter new];
+    lastUpdatedFormatter.doesRelativeDateFormatting = YES;
+    lastUpdatedFormatter.dateStyle = NSDateFormatterShortStyle;
+    lastUpdatedFormatter.timeStyle = NSDateFormatterShortStyle;
+    
     defaults = [NSUserDefaults standardUserDefaults];
-    NSInteger saved = [defaults integerForKey:amountOfFoodAtStartKey];
+    NSInteger saved = [defaults integerForKey:kAmountOfFoodAtStartKey];
+    NSDate *savedLastUpdated = (NSDate *)[defaults objectForKey:kLastUpdatedKey];
+    [self updateLastUpdatedLabelWithDate:savedLastUpdated];
+    if (savedLastUpdated) {
+        lastUpdated = savedLastUpdated;
+    }
     if (saved == 0) {
         saved = 4;
     }
-    NSLog(@"%li", (long)saved);
     interactiveCanViewController.amountOfFood = saved;
+}
+
+- (void)updateLastUpdatedLabelWithDate:(NSDate *)date {
+    NSString *formatted = [lastUpdatedFormatter stringFromDate:date];
+    self.lastUpdatedLabel.text = [NSString stringWithFormat:@"Last updated %@", formatted];
 }
 
 - (void)setAmountOfFoodAtStart:(NSInteger)amountOfFoodAtStart {
     [feedbackGenerator selectionChanged];
-    NSLog(@"%li", amountOfFoodAtStart);
-    [defaults setInteger:amountOfFoodAtStart forKey:amountOfFoodAtStartKey];
+    NSDate *now = [NSDate new];
+    lastUpdated = now;
+    [self updateLastUpdatedLabelWithDate:now];
+    
+    [defaults setObject:now forKey:kLastUpdatedKey];
+    [defaults setInteger:amountOfFoodAtStart forKey:kLastUpdatedKey];
     [defaults synchronize];
+    
     self.infoLabel.text = self.infoLabelText;
     infoCanViewController.amountOfFood = self.eodFoodAmount;
+
     [self popView:self.interactiveCanViewContainerView];
 }
 
 - (NSInteger)amountOfFoodAtStart {
-    NSInteger saved = [defaults integerForKey:amountOfFoodAtStartKey];
+    NSInteger saved = [defaults integerForKey:kLastUpdatedKey];
     if (saved == 0) {
         saved = 4;
     }
@@ -73,13 +98,11 @@
 }
 
 - (bool)needsNewCan {
-    NSLog(@"foo");
     return self.amountOfFoodAtStart < amountOfFoodHeEatsPerDay;
 }
 
 
 - (NSInteger)eodFoodAmount {
-    NSLog(@"bar");
     NSInteger result = self.amountOfFoodAtStart - amountOfFoodHeEatsPerDay;
     if (self.needsNewCan) {
         result = 4 + result;
@@ -88,17 +111,21 @@
 }
 
 - (void)popView:(UIView *)view {
-    [UIView animateWithDuration:0.1 animations:^{
-        [view setTransform:CGAffineTransformMakeScale(0.9, 0.9)];
-    } completion:^(BOOL finished) {\
-        [UIView animateWithDuration:0.1 animations:^{
-            [view setTransform:CGAffineTransformIdentity];
-        }];
-    }];
+    [UIView animateWithDuration:0.05
+                          delay:0
+                        options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                                    [view setTransform:CGAffineTransformMakeScale(0.9, 0.9)];
+                                }
+                     completion:^(BOOL finished) {
+                                    [UIView animateWithDuration:0.05 animations:^{
+                                        [view setTransform:CGAffineTransformIdentity];
+                                    }];
+                                }
+     ];
 }
 
 - (NSString *)infoLabelText {
-    NSLog(@"foobar");
     bool needNewCan = self.needsNewCan;
     NSString* result = @"";
     if (needNewCan) {
