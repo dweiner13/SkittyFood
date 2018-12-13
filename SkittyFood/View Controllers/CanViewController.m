@@ -62,7 +62,6 @@
             obj.backgroundColor = self.canFoodColor;
         }
     }];
-    [self.delegate canViewController:self didSetFood:amountOfFood];
 }
 
 - (NSInteger)amountOfFood {
@@ -74,6 +73,7 @@
         return;
     }
     self.amountOfFood = 4;
+    [self.delegate canViewController:self didSetFood:self.amountOfFood];
 }
 
 - (IBAction)tappedSecondQuarter:(id)sender {
@@ -81,6 +81,7 @@
         return;
     }
     self.amountOfFood = 3;
+    [self.delegate canViewController:self didSetFood:self.amountOfFood];
 }
 
 - (IBAction)tappedThirdQuarter:(id)sender {
@@ -88,6 +89,7 @@
         return;
     }
     self.amountOfFood = 2;
+    [self.delegate canViewController:self didSetFood:self.amountOfFood];
 }
 
 - (IBAction)tappedFourthQuater:(id)sender {
@@ -95,5 +97,6 @@
         return;
     }
     self.amountOfFood = 1;
+    [self.delegate canViewController:self didSetFood:self.amountOfFood];
 }
 @end

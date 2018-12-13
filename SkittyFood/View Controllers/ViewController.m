@@ -24,7 +24,6 @@ NSString *kAmountOfFoodAtStartKey = @"amountOfFoodAtStartKey";
 NSString *kLastUpdatedKey = @"dateFoodAtStartLastUpdated";
 
 @implementation ViewController {
-    NSInteger _amountOfFoodAtStart;
     NSDate *lastUpdated;
     NSUserDefaults *defaults;
     NSInteger amountOfFoodHeEatsPerDay;
@@ -62,11 +61,8 @@ NSString *kLastUpdatedKey = @"dateFoodAtStartLastUpdated";
         lastUpdated = savedLastUpdated;
     }
 
-    NSInteger saved = [defaults integerForKey:kAmountOfFoodAtStartKey];
-    if (saved == 0) {
-        saved = 4;
-    }
-    interactiveCanViewController.amountOfFood = saved;
+    interactiveCanViewController.amountOfFood = self.amountOfFoodAtStart;
+    infoCanViewController.amountOfFood = self.eodFoodAmount;
 }
 
 - (void)updateLastUpdatedLabelWithDate:(NSDate *)date {
@@ -76,11 +72,6 @@ NSString *kLastUpdatedKey = @"dateFoodAtStartLastUpdated";
 
 - (void)setAmountOfFoodAtStart:(NSInteger)amountOfFoodAtStart {
     [feedbackGenerator selectionChanged];
-    NSDate *now = [NSDate new];
-    lastUpdated = now;
-    [self updateLastUpdatedLabelWithDate:now];
-    
-    [defaults setObject:now forKey:kLastUpdatedKey];
     [defaults setInteger:amountOfFoodAtStart forKey:kAmountOfFoodAtStartKey];
     [defaults synchronize];
     
@@ -91,7 +82,7 @@ NSString *kLastUpdatedKey = @"dateFoodAtStartLastUpdated";
 }
 
 - (NSInteger)amountOfFoodAtStart {
-    NSInteger saved = [defaults integerForKey:kLastUpdatedKey];
+    NSInteger saved = [defaults integerForKey:kAmountOfFoodAtStartKey];
     if (saved == 0) {
         saved = 4;
     }
@@ -138,6 +129,10 @@ NSString *kLastUpdatedKey = @"dateFoodAtStartLastUpdated";
 
 - (void)canViewController:(CanViewController *)canViewController didSetFood:(NSInteger)food {
     NSLog(@"Main view controller set food: %li", food);
+    NSDate *now = [NSDate new];
+    lastUpdated = now;
+    [self updateLastUpdatedLabelWithDate:now];
+    [defaults setObject:now forKey:kLastUpdatedKey];
     self.amountOfFoodAtStart = food;
 }
 
